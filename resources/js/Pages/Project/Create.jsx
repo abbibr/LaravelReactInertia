@@ -1,8 +1,10 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import {TextInput, TextAreaInput} from "@/Components/TextInput";
+import SelectInput from "@/Components/SelectInput";
+import TextAreaInput from "@/Components/TextAreaInput";
+import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Create({ auth }) {
   const { data, setData, post, errors, reset } = useForm({
@@ -48,6 +50,7 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextInput
+                  id="project_image"
                   type="file"
                   name="image"
                   value={data.image}
@@ -67,6 +70,7 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextInput
+                  id="project_name"
                   type="text"
                   name="name"
                   value={data.name}
@@ -87,6 +91,7 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextAreaInput
+                  id="project_description"
                   type="text"
                   name="description"
                   value={data.description}
@@ -98,6 +103,65 @@ export default function Create({ auth }) {
                   message={errors.description}
                   className="mt-2"
                 ></InputError>
+              </div>
+
+              <div className="mt-4">
+                <InputLabel
+                  value="Project Deadline"
+                ></InputLabel>
+
+                <TextInput
+                  id="project_due_date"
+                  type="date"
+                  name="due_date"
+                  value={data.due_date}
+                  className="mt-1 block w-full"
+                  isFocused={true}
+                  onChanged={(e) => setData("due_date", e.target.value)}
+                ></TextInput>
+
+                <InputError
+                  message={errors.due_date}
+                  className="mt-2"
+                ></InputError>
+              </div>
+
+              <div className="mt-4">
+                <InputLabel
+                  value="Project Status"
+                ></InputLabel>
+
+                <SelectInput
+                  name="status"
+                  id="project_status"
+                  className="mt-1 block w-full"
+                  onChanged={(e) => setData("status", e.target.value)}
+                >
+                    <option value="">Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </SelectInput>
+
+                <InputError
+                  message={errors.project_status}
+                  className="mt-2"
+                ></InputError>
+              </div>
+
+              <div className="mt-4 text-right">
+                <Link 
+                  href={route('project.index')}
+                  className="inline-block bg-gray-100 py-1 px-3 text-sm h-8 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                >
+                    Cancel
+                </Link>
+
+                <button
+                  className="bg-emerald-500 py-1 px-3 text-sm h-8 text-white rounded shadow transition-all hover:bg-emerald-600"
+                >
+                    Submit
+                </button>
               </div>
 
             </form>
