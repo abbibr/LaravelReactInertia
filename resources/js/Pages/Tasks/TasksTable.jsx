@@ -5,7 +5,7 @@ import TextInput from "@/Components/TextInput";
 import { Link, router } from "@inertiajs/react";
 import { TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT_MAP } from "@/constant.jsx";
 
-export default function TasksTable({ tasks, queryParams = null}) {
+export default function TasksTable({ tasks, queryParams = null, hideProjectColumn = false}) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -55,7 +55,9 @@ export default function TasksTable({ tasks, queryParams = null}) {
               </TableHeading>
 
               <th className="px-3 py-2">Image</th>
-              <th className="px-3 py-2">Project Name</th>
+              {!hideProjectColumn && (
+                <th className="px-3 py-2">Project Name</th> 
+              )}
 
               <TableHeading
                 name="name"
@@ -102,6 +104,9 @@ export default function TasksTable({ tasks, queryParams = null}) {
             <tr className="text-nowrap">
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
+              {!hideProjectColumn && (
+                <th className="px-3 py-2"></th>
+              )}
               <th className="px-3 py-2">
                 <TextInput
                   className="w-full"
@@ -142,7 +147,9 @@ export default function TasksTable({ tasks, queryParams = null}) {
                 <td className="px-3 py-3">
                   <img src={task.image_path} style={{ width: 75 }} />
                 </td>
-                <td className="px-3 py-3">{task.project.name}</td>
+                {!hideProjectColumn && (
+                  <td className="px-3 py-3">{task.project.name}</td>
+                )}
                 <td className="px-3 py-3">{task.name}</td>
                 <td className="px-3 py-3">
                   <span
