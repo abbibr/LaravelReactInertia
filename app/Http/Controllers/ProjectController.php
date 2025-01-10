@@ -106,7 +106,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return Inertia::render('Project/Edit', [
+            'project' => new ProjectResource($project)
+        ]);
     }
 
     /**
@@ -122,9 +124,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $name = $project->name;
         $project->delete();
 
         return redirect()->route('project.index')
-            ->with('success', value: 'Project Successfully Deleted');
+            ->with('success', value: "Project $name was Deleted");
     }
 }
