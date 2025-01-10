@@ -18,7 +18,7 @@ export default function Create({ auth }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("project.create"));
+    post(route("project.store"));
   };
 
   return (
@@ -40,8 +40,6 @@ export default function Create({ auth }) {
             <form
               onSubmit={onSubmit}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
-              action=""
-              method="post"
             >
 
               <div>
@@ -50,12 +48,10 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextInput
-                  id="project_image"
                   type="file"
                   name="image"
-                  value={data.image}
                   className="mt-1 block w-full"
-                  onChanged={(e) => setData("image", e.target.value)}
+                  onChange={(e) => setData("image", e.target.files[0])}
                 ></TextInput>
 
                 <InputError
@@ -70,13 +66,12 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextInput
-                  id="project_name"
                   type="text"
                   name="name"
                   value={data.name}
                   className="mt-1 block w-full"
                   isFocused={true}
-                  onChanged={(e) => setData("name", e.target.value)}
+                  onChange={(e) => setData("name", e.target.value)}
                 ></TextInput>
 
                 <InputError
@@ -96,7 +91,7 @@ export default function Create({ auth }) {
                   name="description"
                   value={data.description}
                   className="mt-1 block w-full"
-                  onChanged={(e) => setData("description", e.target.value)}
+                  onChange={(e) => setData("description", e.target.value)}
                 ></TextAreaInput>
 
                 <InputError
@@ -111,13 +106,12 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextInput
-                  id="project_due_date"
                   type="date"
                   name="due_date"
                   value={data.due_date}
                   className="mt-1 block w-full"
                   isFocused={true}
-                  onChanged={(e) => setData("due_date", e.target.value)}
+                  onChange={(e) => setData("due_date", e.target.value)}
                 ></TextInput>
 
                 <InputError
@@ -133,9 +127,8 @@ export default function Create({ auth }) {
 
                 <SelectInput
                   name="status"
-                  id="project_status"
                   className="mt-1 block w-full"
-                  onChanged={(e) => setData("status", e.target.value)}
+                  onChange={(e) => setData("status", e.target.value)}
                 >
                     <option value="">Select Status</option>
                     <option value="pending">Pending</option>
