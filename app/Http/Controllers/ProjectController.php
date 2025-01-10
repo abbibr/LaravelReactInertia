@@ -7,6 +7,7 @@ use App\Http\Resources\TaskResource;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -116,7 +117,22 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->validated();
+        $image = $data['image'] ?? null;
+        $data['updated_by'] = auth()->user()->id;
+
+        if($image) {
+            if($project->image_path) {
+                Storage::disk('public')->deleteDirectory(dirname($project->image_path));
+            }
+
+            $data['image_path'] = $image->store('project/images/'.Str::random());
+        }
+
+        $project->update($data);
+
+        return redirect()->route('project.index')
+            ->with('success', "Project $project->name Successfully Updated");
     }
 
     /**
@@ -126,6 +142,10 @@ class ProjectController extends Controller
     {
         $name = $project->name;
         $project->delete();
+        
+        if($project->image_path) {
+            Storage::disk('public')->deleteDirectory(dirname($project->image_path));
+        }
 
         return redirect()->route('project.index')
             ->with('success', value: "Project $name was Deleted");

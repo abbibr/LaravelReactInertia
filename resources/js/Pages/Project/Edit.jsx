@@ -4,7 +4,7 @@ import SelectInput from "@/Components/SelectInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 
 export default function Edit({ auth, project }) {
   const { data, setData, post, errors, reset } = useForm({
@@ -14,12 +14,13 @@ export default function Edit({ auth, project }) {
     status: project.status || "",
     description: project.description || "",
     due_date: project.due_date || "",
+    _method: 'PUT'
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("project.store"));
+    post(route("project.update", project.id));
   };
 
   return (
