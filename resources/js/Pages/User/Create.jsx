@@ -1,18 +1,15 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import SelectInput from "@/Components/SelectInput";
-import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Create({ auth }) {
   const { data, setData, post, errors, reset } = useForm({
-    image: "",
+    email: "",
     name: "",
-    status: "",
-    description: "",
-    due_date: "",
+    password: "",
+    password_confirmation: "",
   });
 
   const onSubmit = (e) => {
@@ -27,7 +24,7 @@ export default function Create({ auth }) {
       header={
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Create User
+            Create New User
           </h2>
         </div>
       }
@@ -41,24 +38,6 @@ export default function Create({ auth }) {
               onSubmit={onSubmit}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
             >
-
-              <div>
-                <InputLabel
-                  value="User Image"
-                ></InputLabel>
-
-                <TextInput
-                  type="file"
-                  name="image"
-                  className="mt-1 block w-full"
-                  onChange={(e) => setData("image", e.target.files[0])}
-                ></TextInput>
-
-                <InputError
-                  message={errors.image}
-                  className="mt-2"
-                ></InputError>
-              </div>
 
               <div className="mt-4">
                 <InputLabel
@@ -82,62 +61,60 @@ export default function Create({ auth }) {
 
               <div className="mt-4">
                 <InputLabel
-                  value="User Description"
-                ></InputLabel>
-
-                <TextAreaInput
-                  id="user_description"
-                  type="text"
-                  name="description"
-                  value={data.description}
-                  className="mt-1 block w-full"
-                  onChange={(e) => setData("description", e.target.value)}
-                ></TextAreaInput>
-
-                <InputError
-                  message={errors.description}
-                  className="mt-2"
-                ></InputError>
-              </div>
-
-              <div className="mt-4">
-                <InputLabel
-                  value="User Deadline"
+                  value="User Email"
                 ></InputLabel>
 
                 <TextInput
-                  type="date"
-                  name="due_date"
-                  value={data.due_date}
+                  type="email"
+                  name="email"
+                  value={data.email}
                   className="mt-1 block w-full"
                   isFocused={true}
-                  onChange={(e) => setData("due_date", e.target.value)}
+                  onChange={(e) => setData("email", e.target.value)}
                 ></TextInput>
 
                 <InputError
-                  message={errors.due_date}
+                  message={errors.email}
                   className="mt-2"
                 ></InputError>
               </div>
 
               <div className="mt-4">
                 <InputLabel
-                  value="User Status"
+                  value="User Password"
                 ></InputLabel>
 
-                <SelectInput
-                  name="status"
+                <TextInput
+                  type="password"
+                  name="password"
+                  value={data.password}
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("status", e.target.value)}
-                >
-                    <option value="">Select Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                </SelectInput>
+                  isFocused={true}
+                  onChange={(e) => setData("password", e.target.value)}
+                ></TextInput>
 
                 <InputError
-                  message={errors.status}
+                  message={errors.password}
+                  className="mt-2"
+                ></InputError>
+              </div>
+
+              <div className="mt-4">
+                <InputLabel
+                  value="User Password Confirmation"
+                ></InputLabel>
+
+                <TextInput
+                  type="password"
+                  name="password_confirmation"
+                  value={data.password_confirmation}
+                  className="mt-1 block w-full"
+                  isFocused={true}
+                  onChange={(e) => setData("password_confirmation", e.target.value)}
+                ></TextInput>
+
+                <InputError
+                  message={errors.password_confirmation}
                   className="mt-2"
                 ></InputError>
               </div>
