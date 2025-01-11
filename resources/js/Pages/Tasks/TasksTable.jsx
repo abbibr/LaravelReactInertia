@@ -141,7 +141,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 key={task.id}
               >
                 <td className="px-3 py-3">
-                  {/* {(projects.meta.current_page - 1) * projects.meta.per_page + index + 1} */}
+                  {/* {(tasks.meta.current_page - 1) * tasks.meta.per_page + index + 1} */}
                   {task.id}
                 </td>
                 <td className="px-3 py-3">
