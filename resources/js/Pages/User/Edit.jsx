@@ -6,21 +6,21 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
 
-export default function Edit({ auth, project }) {
+export default function Edit({ auth, user }) {
   const { data, setData, post, errors, reset } = useForm({
     image: "",
-    image_path: project.image_path || "",
-    name: project.name || "",
-    status: project.status || "",
-    description: project.description || "",
-    due_date: project.due_date || "",
+    image_path: user.image_path || "",
+    name: user.name || "",
+    status: user.status || "",
+    description: user.description || "",
+    due_date: user.due_date || "",
     _method: 'PUT'
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("project.update", project.id));
+    post(route("user.update", user.id));
   };
 
   return (
@@ -29,7 +29,7 @@ export default function Edit({ auth, project }) {
       header={
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Edit User: {project.name}
+            Edit User: {user.name}
           </h2>
         </div>
       }
@@ -44,9 +44,9 @@ export default function Edit({ auth, project }) {
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
             >
 
-              {project.image_path && (
+              {user.image_path && (
                 <div className="mb-4">
-                    <img src={project.image_path} className="w-64" />
+                    <img src={user.image_path} className="w-64" />
                 </div>
               )}
 
@@ -94,7 +94,7 @@ export default function Edit({ auth, project }) {
                 ></InputLabel>
 
                 <TextAreaInput
-                  id="project_description"
+                  id="user_description"
                   type="text"
                   name="description"
                   value={data.description}
@@ -152,7 +152,7 @@ export default function Edit({ auth, project }) {
 
               <div className="mt-4 text-right">
                 <Link 
-                  href={route('project.index')}
+                  href={route('user.index')}
                   className="inline-block bg-gray-100 py-1 px-3 text-sm h-8 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
                 >
                     Cancel

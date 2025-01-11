@@ -18,7 +18,7 @@ export default function Create({ auth }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("project.store"));
+    post(route("user.store"));
   };
 
   return (
@@ -86,7 +86,7 @@ export default function Create({ auth }) {
                 ></InputLabel>
 
                 <TextAreaInput
-                  id="project_description"
+                  id="user_description"
                   type="text"
                   name="description"
                   value={data.description}
@@ -144,7 +144,7 @@ export default function Create({ auth }) {
 
               <div className="mt-4 text-right">
                 <Link 
-                  href={route('project.index')}
+                  href={route('user.index')}
                   className="inline-block bg-gray-100 py-1 px-3 text-sm h-8 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
                 >
                     Cancel
