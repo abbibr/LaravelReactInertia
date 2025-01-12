@@ -5,7 +5,11 @@ import TextInput from "@/Components/TextInput";
 import { Link, router } from "@inertiajs/react";
 import { TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT_MAP } from "@/constant.jsx";
 
-export default function TasksTable({ tasks, queryParams = null, hideProjectColumn = false}) {
+export default function TasksTable({
+  tasks,
+  queryParams = null,
+  hideProjectColumn = false,
+}) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -40,7 +44,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
   };
 
   const deleteTask = (task) => {
-    if(!window.confirm("Are you sure you want to delete the task?")) {
+    if (!window.confirm("Are you sure you want to delete the task?")) {
       return;
     }
 
@@ -64,7 +68,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
 
               <th className="px-3 py-2">Image</th>
               {!hideProjectColumn && (
-                <th className="px-3 py-2">Project Name</th> 
+                <th className="px-3 py-2">Project Name</th>
               )}
 
               <TableHeading
@@ -103,7 +107,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 Due Date
               </TableHeading>
 
-              <th className="px-3 py-2">Created By</th>
+              <th className="px-3 py-2">Assigned User</th>
               <th className="px-3 py-2 text-right">Actions</th>
             </tr>
           </thead>
@@ -112,9 +116,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
             <tr className="text-nowrap">
               <th className="px-3 py-2"></th>
               <th className="px-3 py-2"></th>
-              {!hideProjectColumn && (
-                <th className="px-3 py-2"></th>
-              )}
+              {!hideProjectColumn && <th className="px-3 py-2"></th>}
               <th className="px-3 py-2">
                 <TextInput
                   className="w-full"
@@ -159,9 +161,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                   <td className="px-3 py-3">{task.project.name}</td>
                 )}
                 <th className="px-3 py-3 text-gray-100 hover:underline">
-                  <Link href={route('task.show', task.id)}>
-                    {task.name}
-                  </Link>
+                  <Link href={route("task.show", task.id)}>{task.name}</Link>
                 </th>
                 <td className="px-3 py-3">
                   <span
@@ -175,21 +175,27 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 </td>
                 <td className="px-3 py-3 text-nowrap">{task.created_at}</td>
                 <td className="px-3 py-3 text-nowrap">{task.due_date}</td>
-                <td className="px-3 py-3">{task.createdBy.name}</td>
+                <td className="px-3 py-3">{task.assignedUser.name}</td>
                 <td className="px-3 py-3">
-                  <Link
-                    href={route("task.edit", task.id)}
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
-                  >
-                    Edit
-                  </Link>
+                  <div className="flex space-x-2 items-center">
+                    {task.updateTask && (
+                      <Link
+                        href={route("task.edit", task.id)}
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
+                      >
+                        Edit
+                      </Link>
+                    )}
 
-                  <button 
-                    className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1" 
-                    onClick={(e) => deleteTask(task)}
-                  >
-                    Delete
-                  </button>
+                    {task.deleteTask && (
+                      <button
+                        className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
+                        onClick={(e) => deleteTask(task)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

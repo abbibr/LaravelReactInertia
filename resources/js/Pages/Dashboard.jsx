@@ -85,8 +85,8 @@ export default function Dashboard({
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                       key={task.id}
                     >
-                      <td className="px-3 py-2">{task.id}</td>
-                      <td className="px-3 py-2">
+                      <td className="px-3 py-3">{task.id}</td>
+                      <td className="px-3 py-3">
                         <Link
                           href={route("project.show", task.project.id)}
                           className="hover:underline text-white"
@@ -94,7 +94,7 @@ export default function Dashboard({
                           {task.project.name}
                         </Link>
                       </td>
-                      <td className="px-3 py-2">
+                      <td className="px-3 py-3">
                         <Link
                           href={route("task.show", task.id)}
                           className="hover:underline text-white"
@@ -102,7 +102,7 @@ export default function Dashboard({
                           {task.name}
                         </Link>
                       </td>
-                      <td className="px-3 py-2">
+                      <td className="px-3 py-3">
                         <span
                           className={
                             "px-2 py-1 rounded text-white text-nowrap " +
@@ -112,7 +112,7 @@ export default function Dashboard({
                           {TASK_STATUS_TEXT_MAP[task.status]}
                         </span>
                       </td>
-                      <td className="px-3 py-2 text-nowrap">{task.due_date}</td>
+                      <td className="px-3 py-3 text-nowrap">{task.due_date}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -40,10 +41,19 @@ class TaskController extends Controller
                 ->paginate(10)
                 ->onEachSide(1);
 
+        // Add an `authorized` field to each task for frontend checks
+        $tasks->getCollection()->transform(function ($task) {
+            $task->updateTask = Gate::allows('updateTask', $task); 
+            // Check if the user can update or delete
+            $task->deleteTask = Gate::allows('deleteTask', $task);
+
+            return $task;
+        });
+
         return Inertia::render('Tasks/Index', [
             'tasks' => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
-            'success' => session('success')
+            'success' => session('success'),
         ]);
     }
 
@@ -96,13 +106,17 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        if(!Gate::allows('updateTask', $task)) {
+            abort(403, 'SORRY! You can not update this task...');
+        }
+
         $projects = Project::orderBy('name', 'asc')->get();
         $users = User::all();
 
         return Inertia::render("Tasks/Edit", [
             'task' => new TaskResource($task),
             'projects' => ProjectResource::collection($projects),
-            'users' => UserResource::collection($users),
+            'users' => UserResource::collection($users)
         ]);
     }
 
@@ -111,6 +125,8 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
+        Gate::authorize('updateTask', $task);
+
         $data = $request->validated();
         $image = $data['image'] ?? null;
         $data['updated_by'] = auth()->user()->id;
@@ -134,6 +150,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        if(Gate::denies('deleteTask', $task)) {
+            abort(403, 'SORRY! You can not delete this task...');
+        }
+
         $task->delete();
 
         if($task->image_path) {
