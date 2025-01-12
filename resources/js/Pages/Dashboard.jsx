@@ -1,7 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ 
+    auth, 
+    myPendingTasks, 
+    totalPendingTasks,
+    myProgressTasks,
+    totalProgressTasks,
+    totalCompletedTasks,
+    myCompletedTasks
+}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -10,9 +18,39 @@ export default function Dashboard({ auth }) {
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-3 gap-2">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">You're logged in!</div>
+                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                            <h3 className='text-amber-500 text-2xl font-semibold'>
+                                Pending Tasks
+                            </h3>
+                            <p className='text-lg mt-4'>
+                                <span className='mr-2'>{myPendingTasks}</span>/
+                                <span className='ml-2'>{totalPendingTasks}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                            <h3 className='text-blue-500 text-2xl font-semibold'>
+                                In Progress Tasks
+                            </h3>
+                            <p className='text-lg mt-4'>
+                                <span className='mr-2'>{myProgressTasks}</span>/
+                                <span className='ml-2'>{totalProgressTasks}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                            <h3 className='text-green-500 text-2xl font-semibold'>
+                                Completed Tasks
+                            </h3>
+                            <p className='text-lg mt-4'>
+                                <span className='mr-2'>{myCompletedTasks}</span>/
+                                <span className='ml-2'>{totalCompletedTasks}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
