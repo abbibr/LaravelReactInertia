@@ -1,17 +1,26 @@
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constant";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { stringify } from "postcss";
 import TasksTable from "../Tasks/TasksTable";
 
-export default function Show({auth, project, tasks, queryParams}) {
+export default function Show({ auth, project, tasks, queryParams }) {
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          {`Project: "${project.name}"`}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {`Project: "${project.name}"`}
+          </h2>
+
+          <Link
+            href={route("project.edit", project.id)}
+            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+          >
+            Edit
+          </Link>
+        </div>
       }
     >
       <Head title={`Project: "${project.name}"`}></Head>
@@ -20,10 +29,10 @@ export default function Show({auth, project, tasks, queryParams}) {
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div>
-                <img
-                  src={project.image_path}
-                  className="w-full h-64 object-cover"
-                />
+              <img
+                src={project.image_path}
+                className="w-full h-64 object-cover"
+              />
             </div>
 
             <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -73,9 +82,7 @@ export default function Show({auth, project, tasks, queryParams}) {
 
               <div className="mt-4">
                 <label className="font-bold text-lg">Project Description</label>
-                <p className="mt-1">
-                    {project.description}
-                </p>
+                <p className="mt-1">{project.description}</p>
               </div>
             </div>
           </div>
@@ -90,9 +97,7 @@ export default function Show({auth, project, tasks, queryParams}) {
                 tasks={tasks}
                 queryParams={queryParams}
                 hideProjectColumn={true}
-              >
-
-              </TasksTable>
+              ></TasksTable>
             </div>
           </div>
         </div>

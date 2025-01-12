@@ -1,15 +1,29 @@
-import { TASK_PRIORITY_CLASS_MAP, TASK_PRIORITY_TEXT_MAP, TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT_MAP } from "@/constant";
+import {
+  TASK_PRIORITY_CLASS_MAP,
+  TASK_PRIORITY_TEXT_MAP,
+  TASK_STATUS_CLASS_MAP,
+  TASK_STATUS_TEXT_MAP,
+} from "@/constant";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Show({auth, task}) {
+export default function Show({ auth, task }) {
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          {`Task: "${task.name}"`}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {`Task: "${task.name}"`}
+          </h2>
+
+          <Link
+            href={route("task.edit", task.id)}
+            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+          >
+            Edit
+          </Link>
+        </div>
       }
     >
       <Head title={`Task: "${task.name}"`}></Head>
@@ -18,10 +32,7 @@ export default function Show({auth, task}) {
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div>
-                <img
-                  src={task.image_path}
-                  className="w-full h-64 object-cover"
-                />
+              <img src={task.image_path} className="w-full h-64 object-cover" />
             </div>
 
             <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -57,7 +68,7 @@ export default function Show({auth, task}) {
                           TASK_PRIORITY_CLASS_MAP[task.priority]
                         }
                       >
-                       {TASK_PRIORITY_TEXT_MAP[task.priority]}
+                        {TASK_PRIORITY_TEXT_MAP[task.priority]}
                       </span>
                     </p>
                   </div>
@@ -83,7 +94,10 @@ export default function Show({auth, task}) {
                   <div className="mt-4 text-emerald-500">
                     <label className="font-bold text-lg">Project Task</label>
                     <p className="mt-1 text-emerald-500">
-                      <Link href={route('project.show', task.project.id)} className="hover:underline">
+                      <Link
+                        href={route("project.show", task.project.id)}
+                        className="hover:underline"
+                      >
                         {task.project.name}
                       </Link>
                     </p>
@@ -97,9 +111,7 @@ export default function Show({auth, task}) {
 
               <div className="mt-4">
                 <label className="font-bold text-lg">Task Description</label>
-                <p className="mt-1">
-                    {task.description}
-                </p>
+                <p className="mt-1">{task.description}</p>
               </div>
             </div>
           </div>
