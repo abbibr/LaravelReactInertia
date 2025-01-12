@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
+use App\Http\Resources\UserCrudResource;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\UserResource;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -38,6 +43,7 @@ class TaskController extends Controller
         return Inertia::render('Tasks/Index', [
             'tasks' => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
+            'success' => session('success')
         ]);
     }
 
@@ -46,7 +52,13 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Tasks/Create');
+        $projects = Project::orderBy('name', 'asc')->get();
+        $users = User::all();
+
+        return Inertia::render('Tasks/Create', [
+            'projects' => ProjectResource::collection($projects),
+            'users' => UserResource::collection($users),
+        ]);
     }
 
     /**
@@ -73,29 +85,9 @@ class TaskController extends Controller
      * Display the specified resource.
      */
     public function show(Task $task)
-    {
-        $query = $task->tasks();
-
-        $sortField = request('sort_field', 'created_at');
-        $sortDirection = request('sort_direction', 'desc');
-
-        if(request("name")) {
-           $query->where("name", "like", "%". request("name") ."%");
-        }
-
-        if(request("status")) {
-            $query->where("status", request("status"));
-        }
-
-        $tasks = $query->orderBy($sortField, $sortDirection)
-                ->paginate(10)
-                ->onEachSide(1);
-
-        
-        return Inertia::render('Task/Show', [
-            'task' => new TaskResource($task),
-            'tasks' => TaskResource::collection($tasks),
-            'queryParams' => request()->query() ?: null,
+    {   
+        return Inertia::render('Tasks/Show', [
+            'task' => new TaskResource($task)
         ]);
     }
 
@@ -104,8 +96,13 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        $projects = Project::orderBy('name', 'asc')->get();
+        $users = User::all();
+
         return Inertia::render("Tasks/Edit", [
-            'task' => new TaskResource($task)
+            'task' => new TaskResource($task),
+            'projects' => ProjectResource::collection($projects),
+            'users' => UserResource::collection($users),
         ]);
     }
 
@@ -145,5 +142,31 @@ class TaskController extends Controller
 
         return redirect()->route('task.index')
             ->with('success', "Task $task->name Successfully Deleted");
+    }
+
+    public function myTasks() {
+        $user = auth()->user();
+        $query = Task::query()->where('user_id', $user->id);
+
+        $sortField = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
+        if(request("name")) {
+           $query->where("name", "like", "%". request("name") ."%");
+        }
+
+        if(request("status")) {
+            $query->where("status", request("status"));
+        }
+
+        $tasks = $query->orderBy($sortField, $sortDirection)
+                ->paginate(10)
+                ->onEachSide(1);
+
+        return Inertia::render('Tasks/Index', [
+            'tasks' => TaskResource::collection($tasks),
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success')
+        ]);
     }
 }
