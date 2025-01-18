@@ -94,4 +94,52 @@ class ApiController extends Controller
             'task' => $task
         ]);
     }
+
+    
+     /**
+     * @OA\Put(
+     *     path="/api/tasks/update/{id}",
+     *     summary="Update a specific task",
+     *     description="Update a task by its ID",
+     *     tags={"Tasks"},
+     *     @OA\Parameter(name="id", in="path", required=true, description="Task ID", @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Updated Name"),
+     *             @OA\Property(property="description", type="string", example="Updated content")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Task updated successfully"),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     security={{"BearerToken":{}}}
+     * )
+     */
+
+    public function taskUpdate(Task $task, Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        if (!$task) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+
+        $getTask = $task->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'status' => 'pending',
+            'priority' => 'low',
+            'due_date' => now()->addMonths(2),
+            'user_id' => Auth::id(),
+            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
+            'project_id' => 5
+        ]);
+
+        return response()->json([
+            'task' => $getTask
+        ]);
+    }
 }
