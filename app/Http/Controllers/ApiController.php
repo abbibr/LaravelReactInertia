@@ -47,7 +47,8 @@ class ApiController extends Controller
      * )
      */
 
-     public function taskStore(Request $request) {
+    public function taskStore(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'description' => 'required'
@@ -68,5 +69,29 @@ class ApiController extends Controller
         return response()->json([
             'message' => 'Task created successfully'
         ]);
-     }
+    }
+
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/tasks/show/{id}",
+     *     summary="Get a task",
+     *     description="Retrieve a task",
+     *     tags={"Tasks"},
+     *     @OA\Parameter(name="id", in="path", required=true, description="Task ID", @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="Success"),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     security={{"BearerToken":{}}}
+     * )
+     */
+
+    public function taskShow($id)
+    {
+        $task = Task::find($id);
+
+        return response()->json([
+            'task' => $task
+        ]);
+    }
 }

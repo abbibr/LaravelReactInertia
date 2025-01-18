@@ -19,5 +19,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('tasks')->group(function() {
         Route::get('/', [ApiController::class, 'tasksIndex'])->name('tasks.index');
         Route::post('/store', [ApiController::class, 'taskStore'])->name('tasks.store');
+        Route::get('/show/{id}', [ApiController::class, 'taskShow'])->name('tasks.show');
     });
 });
