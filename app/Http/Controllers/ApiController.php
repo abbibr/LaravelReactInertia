@@ -142,4 +142,26 @@ class ApiController extends Controller
             'task' => $getTask
         ]);
     }
+
+
+     /**
+     * @OA\Delete(
+     *     path="/api/tasks/delete/{id}",
+     *     summary="Delete a specific task",
+     *     description="Delete a task by its ID",
+     *     tags={"Tasks"},
+     *     @OA\Parameter(name="id", in="path", required=true, description="Task ID", @OA\Schema(type="integer")),
+     *     @OA\Response(response=204, description="Task deleted successfully"),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     security={{"BearerToken":{}}}
+     * )
+     */
+
+    public function taskDelete(Task $task) {
+        $task->delete();
+
+        return response()->json([
+            'message' => 'Task successfully deleted'
+        ]);
+    }
 }

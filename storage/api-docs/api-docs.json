@@ -152,6 +152,40 @@
                 ]
             }
         },
+        "/api/tasks/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete a specific task",
+                "description": "Delete a task by its ID",
+                "operationId": "d36d0d16e8f614368adc689ba33af048",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Task deleted successfully"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [

@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/store', [ApiController::class, 'taskStore'])->name('tasks.store');
         Route::get('/show/{id}', [ApiController::class, 'taskShow'])->name('tasks.show');
         Route::put('/update/{task}', [ApiController::class, 'taskUpdate'])->name('tasks.update');
+        Route::delete('/delete/{task}', [ApiController::class, 'taskDelete'])->name('tasks.delete');
     });
 });
