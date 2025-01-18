@@ -25,6 +25,45 @@
                 ]
             }
         },
+        "/api/tasks/store": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Create a new task",
+                "operationId": "bec00c6a5692319cb9f3600ca1f232c0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Task Name"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Task Content"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Task created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ]
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [

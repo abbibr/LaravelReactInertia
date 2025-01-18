@@ -16,5 +16,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/register', [AuthController::class, 'register'])->name('user.register');
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/tasks', [ApiController::class, 'tasksIndex'])->name('tasks.index');
+    Route::prefix('tasks')->group(function() {
+        Route::get('/', [ApiController::class, 'tasksIndex'])->name('tasks.index');
+        Route::post('/store', [ApiController::class, 'taskStore'])->name('tasks.store');
+    });
 });
