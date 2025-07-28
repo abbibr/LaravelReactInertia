@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Task\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Project;
-use App\Models\User;
+use Modules\Project\Models\Project;
+use Modules\User\Models\User;
 
 class Task extends Model
 {

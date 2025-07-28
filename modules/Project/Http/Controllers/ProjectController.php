@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Project\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
-use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Modules\Project\Models\Project;
 
 class ProjectController extends Controller
 {

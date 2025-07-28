@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Task\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserCrudResource;
-use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Project;
-use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Modules\Project\Models\Project;
+use Modules\Task\Models\Task;
+use Modules\User\Models\User;
 
 class TaskController extends Controller
 {

@@ -4,12 +4,12 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Project;
-use App\Models\Task;
-use App\Models\User;
+use Modules\Task\Models\Task;
+use Modules\User\Models\User;
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Modules\Project\Models\Project;
 
 class DatabaseSeeder extends Seeder
 {

@@ -3,13 +3,13 @@
 use App\Http\Controllers\AIInterviewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
+use Modules\Project\Http\Controllers\ProjectController;
+use Modules\Task\Http\Controllers\TaskController;
+use Modules\User\Http\Controllers\UserController;
 
 
 Route::redirect('/', '/dashboard');

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\User\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCrudResource;
-use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Modules\User\Models\User;
 
 class UserController extends Controller
 {
