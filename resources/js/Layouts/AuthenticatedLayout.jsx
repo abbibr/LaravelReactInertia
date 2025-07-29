@@ -52,12 +52,6 @@ export default function Authenticated({ user, header, children }) {
                 >
                   My Tasks
                 </NavLink>
-                <NavLink
-                  href={route("test.test")}
-                  active={route().current("test.test")}
-                >
-                  AI Agent
-                </NavLink>
               </div>
             </div>
 

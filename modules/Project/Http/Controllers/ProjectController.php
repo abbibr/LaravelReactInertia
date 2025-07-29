@@ -151,4 +151,9 @@ class ProjectController extends Controller
         return redirect()->route('project.index')
             ->with('success', value: "Project $name was Deleted");
     }
+
+    public function test()
+    {
+        return view('project::project'); // Prefix with the namespace 'project'
+    }
 }

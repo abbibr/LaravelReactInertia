@@ -190,4 +190,8 @@ class TaskController extends Controller
             'success' => session('success')
         ]);
     }
+
+    public function test() {
+        return view('task::task');
+    }
 }

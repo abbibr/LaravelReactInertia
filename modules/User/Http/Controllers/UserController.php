@@ -117,4 +117,9 @@ class UserController extends Controller
         return redirect()->route('user.index')
             ->with('success', value: "Project $name was Deleted");
     }
+
+    public function test()
+    {
+        return view('user::user');
+    }
 }
