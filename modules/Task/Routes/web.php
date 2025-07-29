@@ -7,7 +7,7 @@ use Modules\Project\Http\Controllers\ProjectController;
 use Modules\Task\Http\Controllers\TaskController;
 
 
-Route::middleware(['auth', 'verified'])->group(function() {
+Route::middleware(['web', 'auth', 'verified'])->group(function() {
     Route::resource('/task', TaskController::class);
     Route::get('tasks/my-tasks', [TaskController::class, 'myTasks'])->name('tasks.myTasks');
     Route::get('/tasks/test', [TaskController::class, 'test']);

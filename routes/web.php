@@ -9,8 +9,6 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
 
 
-Route::redirect('/', '/dashboard');
-
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });

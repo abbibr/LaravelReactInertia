@@ -20,12 +20,12 @@ class ProjectServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/Views', 'project');
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
 
-        $this->mapWebRoutes();
+        // $this->mapWebRoutes();
     }
 
-    protected function mapWebRoutes()
+    /* protected function mapWebRoutes()
     {
         Route::middleware('web')
             ->group(__DIR__ . '/Routes/web.php');
-    }
+    } */
 }
